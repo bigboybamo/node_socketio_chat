@@ -13,7 +13,7 @@ messageForm.addEventListener('submit',(e)=>{
 
 socket.on('totalClients',(data)=>{
     console.log(data)
-    document.getElementById('client-total').innerHTML = `Number of connected user(s) is ${data}`
+    document.getElementById('client-total').innerHTML = `Person(s) in this group: ${data}`
 })
 
 function sendMessage(){
@@ -39,9 +39,10 @@ function addMessage(isOwn,data){
     clearFeedback()
 const element = ` 
 <li class="${isOwn ? "message-right" : "message-left"}">
+
 <p class="message">
     ${data.message}
-    <span>${data.name} ${moment(data.dateTime).fromNow()}</span>
+    <span>${data.name} - ${moment(data.dateTime).fromNow()}</span>
 </p>
 </li>`
 

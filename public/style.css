@@ -58,6 +58,7 @@ body {
 	height: 600px;
 	overflow-y: scroll;
 	overflow-x: hidden;
+	background-image: url("https://wallpaperaccess.com/full/2224368.png");
 }
 
 .message-left,
@@ -135,4 +136,9 @@ body {
 .client-total {
 	margin: 20px 0;
 	color: #7e7e7e;
+}
+
+img {
+	width: 55px;
+	height: 55px;
 }
