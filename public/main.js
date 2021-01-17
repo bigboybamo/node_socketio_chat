@@ -11,7 +11,7 @@ messageForm.addEventListener("submit", (e) => {
 })
 
 socket.on("totalClients", (data) => {
-	console.log(data)
+	
 	document.getElementById(
 		"client-total"
 	).innerHTML = `Person(s) in this group: ${data}`
@@ -19,7 +19,7 @@ socket.on("totalClients", (data) => {
 
 function sendMessage() {
 	if (messageInput.value === "") return
-	console.log(messageInput.value)
+	
 	const data = {
 		name: nameInput.value,
 		message: messageInput.value,
@@ -32,7 +32,7 @@ function sendMessage() {
 }
 
 socket.on("chat-message", (data) => {
-	console.log(data)
+	
 	addMessage(false, data)
 })
 
