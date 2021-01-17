@@ -1,43 +1,44 @@
 const socket = io()
 
-const messageContainer = document.getElementById('message-container')
-const nameInput= document.getElementById('name-input')
-const messageForm = document.getElementById('message-form')
-const messageInput = document.getElementById('message=input')
+const messageContainer = document.getElementById("message-container")
+const nameInput = document.getElementById("name-input")
+const messageForm = document.getElementById("message-form")
+const messageInput = document.getElementById("message=input")
 
-
-messageForm.addEventListener('submit',(e)=>{
-    e.preventDefault()
-    sendMessage()
+messageForm.addEventListener("submit", (e) => {
+	e.preventDefault()
+	sendMessage()
 })
 
-socket.on('totalClients',(data)=>{
-    console.log(data)
-    document.getElementById('client-total').innerHTML = `Person(s) in this group: ${data}`
+socket.on("totalClients", (data) => {
+	console.log(data)
+	document.getElementById(
+		"client-total"
+	).innerHTML = `Person(s) in this group: ${data}`
 })
 
-function sendMessage(){
-if(messageInput.value === '') return
-    console.log(messageInput.value)
-    const data = {
-        name: nameInput.value,
-        message: messageInput.value,
-        dateTime: new Date()
-    }
+function sendMessage() {
+	if (messageInput.value === "") return
+	console.log(messageInput.value)
+	const data = {
+		name: nameInput.value,
+		message: messageInput.value,
+		dateTime: new Date(),
+	}
 
-    socket.emit('message', data)
-    addMessage(true,data)
-    messageInput.value = ''
+	socket.emit("message", data)
+	addMessage(true, data)
+	messageInput.value = ""
 }
 
-socket.on('chat-message', (data)=>{
-    console.log(data);
-    addMessage(false,data)
+socket.on("chat-message", (data) => {
+	console.log(data)
+	addMessage(false, data)
 })
 
-function addMessage(isOwn,data){
-    clearFeedback()
-const element = ` 
+function addMessage(isOwn, data) {
+	clearFeedback()
+	const element = ` 
 <li class="${isOwn ? "message-right" : "message-left"}">
 
 <p class="message">
@@ -46,44 +47,43 @@ const element = `
 </p>
 </li>`
 
-messageContainer.innerHTML += element
-ScrollToBottom()
-
+	messageContainer.innerHTML += element
+	ScrollToBottom()
 }
 
-function ScrollToBottom(){
-    messageContainer.scroll(0,messageContainer.scrollHeight)
+function ScrollToBottom() {
+	messageContainer.scroll(0, messageContainer.scrollHeight)
 }
 
-messageInput.addEventListener('focus',(e)=>{
-    socket.emit('feedback',{
-        feedback:`${nameInput.value} is typing a message`
-    })
+messageInput.addEventListener("focus", (e) => {
+	socket.emit("feedback", {
+		feedback: `${nameInput.value} is typing a message`,
+	})
 })
-messageInput.addEventListener('keypress',(e)=>{
-    socket.emit('feedback',{
-        feedback:`${nameInput.value} is typing a message`
-    })
+messageInput.addEventListener("keypress", (e) => {
+	socket.emit("feedback", {
+		feedback: `${nameInput.value} is typing a message`,
+	})
 })
-messageInput.addEventListener('blur',(e)=>{
-    socket.emit('feedback',{
-        feedback:``
-    })
+messageInput.addEventListener("blur", (e) => {
+	socket.emit("feedback", {
+		feedback: ``,
+	})
 })
 
-socket.on('feedback-message',(data)=>{
-    clearFeedback()
-    const newElement = ` 
+socket.on("feedback-message", (data) => {
+	clearFeedback()
+	const newElement = ` 
     <li class="message-feedback">
     <p class="feedback" id="feedback">
         ${data.feedback}
     </p>
 </li>`
-messageContainer.innerHTML += newElement
+	messageContainer.innerHTML += newElement
 })
 
-function clearFeedback(){
-    document.querySelectorAll('li.message-feedback').forEach(el => {
-        el.parentNode.removeChild(el)
-    })
+function clearFeedback() {
+	document.querySelectorAll("li.message-feedback").forEach((el) => {
+		el.parentNode.removeChild(el)
+	})
 }
