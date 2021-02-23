@@ -1,5 +1,14 @@
 const socket = io()
 
+const loginForm = document.getElementById("login-form")
+
+loginForm.addEventListener('submit',(e)=>{
+	e.preventDefault()
+	const registerName = document.getElementById("username").value
+    const room = document.getElementById("room").value
+	console.log(registerName, room)
+})
+
 const messageContainer = document.getElementById("message-container")
 const nameInput = document.getElementById("name-input")
 const messageForm = document.getElementById("message-form")
